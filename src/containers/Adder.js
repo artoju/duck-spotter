@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { fetchSpecies, addSighting } from '../actions';
-import { FormGroup, FormControl, Button, Form, ControlLabel, Col, Row } from 'react-bootstrap';
+import { FormGroup, Input, Button, Form, FormFeedback, FormText, Label } from 'reactstrap';
 
 class Adder extends Component {
     state = { 
@@ -25,9 +25,9 @@ class Adder extends Component {
             } else if (species.find((e) => {
                 return e.name.toLowerCase() === name.toLowerCase();
             })) {
-                return 'success';
+                return true;
             } else {
-                return 'error';
+                return false;
             }
             case "number":
             if (this.state.count > 0)
@@ -67,41 +67,36 @@ class Adder extends Component {
         const { species } = this.props;
         const options = species.map(specimen => <option value={specimen.name}/>);
         return (
-            <Row>
             
             <Form inline onSubmit={this.handleSubmit}>
-            <Col xs={3} md={3}>
-                <FormGroup
-                validationState={this.getValidationState("species")}>
-                <FormControl bsSize="small" list="species" name="species" placeholder="Select name" value={this.state.species} onChange={this.handleChange}/>
+                <FormGroup>
+                <Input valid={this.getValidationState("species")} bsSize="small" list="species" name="species" placeholder="Select name" value={this.state.species} onChange={this.handleChange}/>
                 <datalist id="species">
                     {options}
                 </datalist>
-                <FormControl.Feedback/>
-                </FormGroup>
-                </Col>
-                <Col xs={3} md={3}>
-                <FormGroup
+                <FormFeedback>Select correct species from the list.</FormFeedback>
+              </FormGroup>
+              <FormGroup>
+          <Label for="examplePassword">Input with danger</Label>
+          <Input valid={false} />
+          <FormFeedback>Oh noes! that name is already taken</FormFeedback>
+          <FormText>Example help text that remains unchanged.</FormText>
+        </FormGroup>
+              {/*   <FormGroup
                 validationState={this.getValidationState("number")}>
                 <FormControl bsSize="small" type="number" name="count" placeholder="Number of ducks" onfocus="this.type='number';" value={this.state.count} onChange={this.handleChange}/>
                 <FormControl.Feedback/>
                 </FormGroup>
-                </Col>            
-                <Col xs={3} md={3} >
                     
                 <FormGroup
                 validationState={this.getValidationState("description")}>
                 <FormControl bsSize="small" type="text" name="description" placeholder="Describe something" value={this.state.description} onChange={this.handleChange}/>
                 <FormControl.Feedback/>
                 </FormGroup>
-                </Col>    
-                <Col xs={3} md={2.5} mdOffset={0.5}>
-                        
+              */}
                 <Button bsStyle="primary" type="submit" name="submit" disabled={!this.state.species || (this.state.count < 1) || !this.state.description}>Add sighting</Button>
-                </Col>    
                 
             </Form>
-            </Row>
             
         )
     }
