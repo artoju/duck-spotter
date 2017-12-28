@@ -7,7 +7,7 @@ import { Table } from 'react-bootstrap';
 
 class SightingList extends Component {
 
-    state = { descending: false };
+    state = { descending: true };
 
     componentWillMount() {
         this.props.fetchSightings();
@@ -18,7 +18,7 @@ class SightingList extends Component {
     }
 
     sortByDate = (arr) => {
-        if (this.state.descending) {
+        if (!this.state.descending) {
             return arr.sort(function(a, b) {
                 return (a.dateTime < b.dateTime) ? -1 : ((a.dateTime > b.dateTime) ? 1 : 0);         
             });
@@ -47,7 +47,7 @@ class SightingList extends Component {
                         <th>Name</th>
                         <th>Count</th>
                         <th>Description</th>
-                        <th onClick={this.handleClick}>Date</th>
+                        {this.state.descending ? <th onClick={this.handleClick}>Date &#9660;</th> : <th onClick={this.handleClick}>Date &#9650;</th>}
                     </tr>
                      {sightingsMap}
                 </tbody>
