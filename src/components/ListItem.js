@@ -16,7 +16,8 @@ const ListItem = props => {
         <td>{props.count}</td>
         <td>{props.description}</td>
         <td>{props.date}</td>
-    </tr> );
+    </tr> 
+    );
 }
 
 export default ListItem;

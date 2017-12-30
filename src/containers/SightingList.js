@@ -18,13 +18,13 @@ class SightingList extends Component {
     }
 
     sortByDate = (arr) => {
-        if (!this.state.descending) {
+        if (this.state.descending) {
             return arr.sort(function(a, b) {
-                return (a.dateTime < b.dateTime) ? -1 : ((a.dateTime > b.dateTime) ? 1 : 0);         
+                return (a.dateTime > b.dateTime) ? -1 : ((a.dateTime < b.dateTime) ? 1 : 0);
             });
         } else {
             return arr.sort(function(a, b) {
-                return (a.dateTime > b.dateTime) ? -1 : ((a.dateTime < b.dateTime) ? 1 : 0);       
+                return (a.dateTime < b.dateTime) ? -1 : ((a.dateTime > b.dateTime) ? 1 : 0);
             });     
         }
     }
@@ -36,7 +36,7 @@ class SightingList extends Component {
 
     render() {
         const { sightings } = this.props;
-        const sightingsMap = this.sortByDate(sightings.slice()).map(sighting => 
+        const sightingsSorted = this.sortByDate(sightings.slice()).map(sighting => 
             <ListItem species={sighting.species} count={sighting.count} date={this.formatDateString(sighting.dateTime)} 
              description={sighting.description}/>);
         
@@ -49,10 +49,10 @@ class SightingList extends Component {
                         <th>Description</th>
                         {this.state.descending ? <th onClick={this.handleClick}>Date &#9660;</th> : <th onClick={this.handleClick}>Date &#9650;</th>}
                     </tr>
-                     {sightingsMap}
+                    {sightingsSorted}
                 </tbody>
             </Table>
-        )
+        );
     }
 
 }

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { fetchSpecies, addSighting } from '../actions';
-import { FormGroup, FormControl, Button, Form, ControlLabel, Col, Row } from 'react-bootstrap';
+import { FormGroup, FormControl, Button, Form, Col, } from 'react-bootstrap';
 
 class Adder extends Component {
     state = { 
@@ -29,6 +29,7 @@ class Adder extends Component {
             } else {
                 return 'error';
             }
+
             case "number":
             if (this.state.count > 0)
                 return 'success';
@@ -36,6 +37,7 @@ class Adder extends Component {
                 return 'error'
             else 
                 return null;
+
             case "description":
             if (this.state.description.length > 0)
                 return 'success'
@@ -54,7 +56,7 @@ class Adder extends Component {
         this.props.addSighting(species, description, dateTime, count);
         this.setState({ 
             species: "",
-            count: 0,
+            count: "",
             description: "",
         })
     }
@@ -65,45 +67,38 @@ class Adder extends Component {
 
     render() {
         const { species } = this.props;
-        const options = species.map(specimen => <option value={specimen.name}/>);
+        console.log(species);
+        const options = species.map(specimen => <option key={specimen.id} value={specimen.name}/>);
         return (
-            <Row>
-            
-            <Form inline onSubmit={this.handleSubmit}>
-            <Col xs={3} md={3}>
-                <FormGroup
-                validationState={this.getValidationState("species")}>
-                <FormControl bsSize="small" list="species" name="species" placeholder="Select name" value={this.state.species} onChange={this.handleChange}/>
-                <datalist id="species">
-                    {options}
-                </datalist>
-                <FormControl.Feedback/>
-                </FormGroup>
-                </Col>
-                <Col xs={3} md={3}>
-                <FormGroup
-                validationState={this.getValidationState("number")}>
-                <FormControl bsSize="small" type="number" name="count" placeholder="Number of ducks" onfocus="this.type='number';" value={this.state.count} onChange={this.handleChange}/>
-                <FormControl.Feedback/>
-                </FormGroup>
-                </Col>            
-                <Col xs={3} md={3} >
-                    
-                <FormGroup
-                validationState={this.getValidationState("description")}>
-                <FormControl bsSize="small" type="text" name="description" placeholder="Describe something" value={this.state.description} onChange={this.handleChange}/>
-                <FormControl.Feedback/>
-                </FormGroup>
-                </Col>    
-                <Col xs={3} md={2.5} mdOffset={0.5}>
-                        
-                <Button bsStyle="primary" type="submit" name="submit" disabled={!this.state.species || (this.state.count < 1) || !this.state.description}>Add sighting</Button>
-                </Col>    
-                
-            </Form>
-            </Row>
-            
-        )
+            <div className="adder">
+                <Form inline onSubmit={this.handleSubmit}>
+                    <Col xs={0} md={3}>
+                        <FormGroup validationState={this.getValidationState("species")}>
+                            <FormControl bsSize="small" list="species" name="species" placeholder="Select name" value={this.state.species} onChange={this.handleChange}/>
+                                <datalist id="species">
+                                    {options}
+                                </datalist>
+                            <FormControl.Feedback/>
+                        </FormGroup>
+                    </Col>
+                    <Col xs={0} md={3}>
+                        <FormGroup validationState={this.getValidationState("number")}>
+                            <FormControl bsSize="small" type="number" name="count" placeholder="Number of ducks" value={this.state.count} onChange={this.handleChange}/>
+                            <FormControl.Feedback/>
+                        </FormGroup>
+                    </Col>            
+                    <Col xs={0} md={3}>
+                            <FormGroup validationState={this.getValidationState("description")}>
+                            <FormControl bsSize="small" type="text" name="description" placeholder="Describe something" value={this.state.description} onChange={this.handleChange}/>
+                            <FormControl.Feedback/>
+                        </FormGroup>
+                    </Col>    
+                        <Col xs={0} md={3}>
+                            <Button bsStyle="primary" type="submit" name="submit" disabled={!this.state.species || (this.state.count < 1) || !this.state.description}>Add sighting</Button>
+                        </Col>    
+                </Form>
+            </div>
+        );
     }
 }
 

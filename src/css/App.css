@@ -1,5 +1,30 @@
-table {
-    margin-top: 1em;
+.adder {
+    margin-bottom: 5em;
+}
+.container {
+    position: relative;
 }
 
+.duck {
+    height: 10em;
+    top: 3.5em;
+    right: 3em;
+    position: absolute;
+}
+
+button {
+    float: right;
+}
+
+@media only screen and (max-width: 768px) {
+    button {
+        float: left;
+    } 
+}
+
+@media (max-width: 767px) {
+    .duck {
+        display: none;
+    }
+ }
 
