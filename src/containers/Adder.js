@@ -68,7 +68,7 @@ class Adder extends Component {
     render() {
         const { species } = this.props;
         console.log(species);
-        const options = species.map(specimen => <option key={specimen.id} value={specimen.name}/>);
+        const options = species.map(specimen => <option value={specimen.name}/>);
         return (
             <div className="adder">
                 <Form inline onSubmit={this.handleSubmit}>
